@@ -4,4 +4,5 @@ public class ConstantValue {
     public static final int HEAD_DATA=0X76;
     public static final int STRING=1;
     public static final int IMAGE=2;
+    public static final int MACHINE_DATA=3;
 }

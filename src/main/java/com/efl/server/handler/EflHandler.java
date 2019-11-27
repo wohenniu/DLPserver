@@ -42,6 +42,10 @@ public class EflHandler extends SimpleChannelInboundHandler<EflMessage> {
             log.info("连接成功："+clientIp);
             String s="服务端连接成功";
             ctx.writeAndFlush(new EflMessage(s.getBytes().length,ConstantValue.STRING,s.getBytes()));
+            int x=print.getWidth();
+            int y=print.getHeight();
+            String data=x+" "+y;
+            ctx.writeAndFlush(new EflMessage(data.getBytes().length,ConstantValue.MACHINE_DATA,data.getBytes()));
         }else {
             String s = "服务端已存在连接";
             ctx.writeAndFlush(new EflMessage(s.getBytes().length, ConstantValue.STRING, s.getBytes()));
