@@ -1,4 +1,4 @@
-package com.efl.server.handler;
+/*package com.efl.server.handler;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler;
@@ -51,3 +51,4 @@ public class DlpHandler extends SimpleChannelInboundHandler<String> {
         ctx.writeAndFlush(s+"\n");
     }
 }
+*/

@@ -2,9 +2,9 @@ package com.efl.server.dlpServer;
 
 import com.efl.server.decoder.EflDecoder;
 import com.efl.server.encoder.EflEncoder;
-import com.efl.server.handler.DlpHandler;
+//import com.efl.server.handler.DlpHandler;
 import com.efl.server.handler.EflHandler;
-import com.efl.server.print.Print;
+//import com.efl.server.print.Print;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -39,10 +39,11 @@ public class DlpServer {
 
 
 
-    @Autowired
-    Print print;
+//    @Autowired
+//    Print print;
     @Autowired
     private EflHandler eflHandler;
+
     public ChannelFuture start(String host,int port){
 
         ChannelFuture f = null;
@@ -86,8 +87,7 @@ public class DlpServer {
         if(channel != null) { channel.close();}
         workerGroup.shutdownGracefully();
         bossGroup.shutdownGracefully();
-        print.dispose();
-
+     //   print.dispose();
         log.info("Shutdown Netty Server Success!");
     }
 

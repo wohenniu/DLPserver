@@ -26,7 +26,7 @@ public class EflDecoder extends ByteToMessageDecoder {
                 // 获取包头开始的index
                 beginReader = in.readerIndex();
                 // 标记包头开始的index
-                in.markReaderIndex();
+                in.markReaderIndex();                                    //?????????
                 // 读到协议的开始标志，结束while循环
                 if (in.readInt() == ConstantValue.HEAD_DATA) {
                     break;
@@ -46,7 +46,7 @@ public class EflDecoder extends ByteToMessageDecoder {
             // 代码到这里，说明已经读到了报文标志
 
             // 消息长度
-            int length = in.readInt();
+            int length = in.readInt();                       //去掉消息头，得到消息长度，得到类型???readInt????????
             // 判断请求数据包是否到齐
             if (in.readableBytes() < length) { // 数据不齐，回退读指针
                 // 还原读指针
@@ -56,9 +56,10 @@ public class EflDecoder extends ByteToMessageDecoder {
 
             // 至此，读到一条完整报文
             byte[] data = new byte[length-4];
+            System.out.println(length);
             int type=in.readInt();
             in.readBytes(data);
-            EflMessage eflMessage = new EflMessage(data.length,type,data);
+            EflMessage eflMessage = new EflMessage(length,type,data);
             list.add(eflMessage);
         }
     }

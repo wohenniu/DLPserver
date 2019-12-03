@@ -6,8 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 @Component
-public class Print extends JFrame {
-
+public class Printing extends JFrame {
 
     private Image image;
 
@@ -54,4 +53,5 @@ public class Print extends JFrame {
         this.image = image;
         repaint();
     }
+
 }

@@ -25,7 +25,7 @@ public class SerialPortA extends SerialportO {
 
     private boolean flag=true;
     private LinkedBlockingQueue<String> queue;
-
+    private boolean isConnect=false;
 
 
 
@@ -75,6 +75,12 @@ public class SerialPortA extends SerialportO {
 
     public void close() {
         reset();
+        isConnect=false;
+        try {
+            queue.put("byebye");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         SerialTool.closePort(serialport);
         serialport = null;
     }
@@ -162,6 +168,7 @@ public class SerialPortA extends SerialportO {
      * 清空队列
      */
     public void reset(){
+        isConnect=true;
         queue.clear();
     }
 
@@ -211,7 +218,7 @@ public class SerialPortA extends SerialportO {
                         str+=new String(data);
                     }
                     log.info("打印机发来信息： "+str);
-                    if(str.indexOf("ok")!=-1||str.indexOf("OK")!=-1) {
+                    if(isConnect&&( str.indexOf("ok")!=-1||str.indexOf("OK")!=-1) ){
                         try {
                             SerialTool.sendToPort(serialport,queue.take());
                         } catch (SendDataToSerialPortFailure sendDataToSerialPortFailure) {
