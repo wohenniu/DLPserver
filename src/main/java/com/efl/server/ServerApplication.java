@@ -26,6 +26,14 @@ public class ServerApplication implements CommandLineRunner {
     @Autowired
     ServerUI serverUI;
 
+    @Autowired
+    DlpServer dlpServer;
+
+    @Value("${netty.url}")
+    private String url;
+
+    @Value("${netty.port}")
+    private int port;
 
     public static void main(String[] args) {
         SpringApplication.run(ServerApplication.class, args);
@@ -57,6 +65,15 @@ public class ServerApplication implements CommandLineRunner {
                 super.windowClosing(e);
             }
         });
+        ChannelFuture future = dlpServer.start(url, port);
+        Runtime.getRuntime().addShutdownHook(new Thread() {  //在jvm销毁之前关闭线程池
+            @Override
+            public void run() {
+                dlpServer.destroy();
+            }
+        });
+        //服务端管道关闭的监听器并同步阻塞,直到channel关闭,线程才会往下执行,结束进程
+        future.channel().closeFuture().syncUninterruptibly();
 
     }
 }
