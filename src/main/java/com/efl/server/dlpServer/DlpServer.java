@@ -2,9 +2,7 @@ package com.efl.server.dlpServer;
 
 import com.efl.server.decoder.EflDecoder;
 import com.efl.server.encoder.EflEncoder;
-//import com.efl.server.handler.DlpHandler;
 import com.efl.server.handler.EflHandler;
-//import com.efl.server.print.Print;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -13,13 +11,12 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.LineBasedFrameDecoder;
-import io.netty.handler.codec.string.StringEncoder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.net.InetSocketAddress;
+import java.net.*;
+import java.util.Enumeration;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
@@ -36,16 +33,33 @@ public class DlpServer {
     private final EventLoopGroup workerGroup = new NioEventLoopGroup(5);
     private ConcurrentHashMap<String,Channel> concurrentHashMap=new ConcurrentHashMap<>();
     private Channel channel;
+    private String host;
 
+    public String getHost() {
+        return host;
+    }
 
-
-//    @Autowired
-//    Print print;
     @Autowired
     private EflHandler eflHandler;
 
-    public ChannelFuture start(String host,int port){
-
+    public ChannelFuture start(int port) {
+       // host= InetAddress.getLocalHost().getHostAddress();
+        try {
+            Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
+            while (networkInterfaces.hasMoreElements()) {
+                NetworkInterface ni = (NetworkInterface) networkInterfaces.nextElement();
+                Enumeration<InetAddress> nias = ni.getInetAddresses();
+                while (nias.hasMoreElements()) {
+                    InetAddress ia = (InetAddress) nias.nextElement();
+                    if (!ia.isLinkLocalAddress() && !ia.isLoopbackAddress() && ia instanceof Inet4Address) {
+                        host=ia.getHostAddress();
+                    }
+                }
+            }
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
+        System.out.println(host);
         ChannelFuture f = null;
         try {
             //ServerBootstrap负责初始化netty服务器，并且开始监听端口的socket请求

@@ -22,7 +22,7 @@ public class Printing extends JFrame {
         this.setCursor(cu);
         GraphicsEnvironment environment = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice[] device = environment.getScreenDevices();
-        Rectangle gcbound= device[0].getDefaultConfiguration().getBounds();
+        Rectangle gcbound= device[1].getDefaultConfiguration().getBounds();
         int X=(int)gcbound.getX();
         int Y=(int)gcbound.getY();
         int Height=(int)gcbound.getHeight();
