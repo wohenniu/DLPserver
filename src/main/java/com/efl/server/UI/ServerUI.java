@@ -61,6 +61,7 @@ public class ServerUI {
     private List<String> serialPortNames;
     private MoveButton1D moveButtonZ;
     private MoveButton1D moveButtonY;
+
     @PostConstruct
     public void init() {
         stopButton.setEnabled(false);
