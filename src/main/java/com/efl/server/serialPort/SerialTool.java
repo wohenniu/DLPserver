@@ -12,13 +12,9 @@ import java.util.TooManyListenersException;
 
 /**
  * 串口服务类，提供打开、关闭串口，读取、发送串口数据等服务（采用单例设计模式）
- * @author zhong
  *
  */
 public class SerialTool {
-
-
-
 
     /**
      * 查找所有可用端口
