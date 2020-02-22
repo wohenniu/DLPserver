@@ -9,9 +9,6 @@ import java.util.ArrayList;
 
 public abstract class SerialportO {
 
-
-
-
     abstract void  sendToPort(String order) throws SerialPortOutputStreamCloseFailure, SendDataToSerialPortFailure, IOException;  //发送串口信息
     abstract byte[] readFromPort() throws ReadDataFromSerialPortFailure, SerialPortInputStreamCloseFailure; //读串口信息
     abstract SerialPort ConnectAuto() throws PortInUse;  //自动连接串口

@@ -20,7 +20,6 @@ public class PropertiesTool {
     private String lightintensity;
     private String Filepath;
 
-
     public void setFilepath(String filepath) {
         Filepath = filepath;
     }

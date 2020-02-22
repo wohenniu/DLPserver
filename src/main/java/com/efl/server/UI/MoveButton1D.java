@@ -12,8 +12,6 @@ import java.awt.geom.RoundRectangle2D;
 
 /**
  * 一维的多组命令控制按钮，通过实现MouseMotionListener的方法用于随着鼠标位置的移动更改命令的选择
- * @author EFL_tjl
- * @version 1.0
  */
 
 public class MoveButton1D extends JComponent implements MouseMotionListener {

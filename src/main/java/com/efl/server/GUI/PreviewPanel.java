@@ -5,8 +5,6 @@ import java.awt.*;
 
 /**
  * 用于预览打印中投屏的图片
- * @author EFL_tjl
- * @version 1.0
  */
 public class PreviewPanel extends JPanel {
 

@@ -37,8 +37,6 @@ public class ServerUI {
     private raspWIFI raspWIFI;
     private String Filepath;
     private Thread printThread;
-
-
     private JPanel panel;
     private JPanel panelone;
     private JPanel paneltwo;
@@ -58,11 +56,9 @@ public class ServerUI {
     private JPanel yMovePanel;
     private JButton 光机测试Button;
     private JTextField textField1;
-
     private String path;
     private String name;
     private List<String> serialPortNames;
-
     private MoveButton1D moveButtonZ;
     private MoveButton1D moveButtonY;
     @PostConstruct
@@ -218,23 +214,19 @@ public class ServerUI {
     public ServerUI(raspWIFI raspWIFI) {
         this.raspWIFI = raspWIFI;
         Wifipanel = raspWIFI.getWifipanel();
-
         moveButtonZ = new MoveButton1D(new String[]{"0.01", "0.1", "1", "10"}, new String[]{"-0.01", "-0.1", "-1", "-10"}, "Z");
         moveButtonZ.setBounds(0, 0, 104, 184);
         JPanel containerZ = new JPanel(null);
         containerZ.add(moveButtonZ);
         containerZ.setSize(104, 184);
         zMovePanel = containerZ;
-
         moveButtonY = new MoveButton1D(new String[]{"0.5", "1", "5"}, new String[]{"-0.5", "-1", "-5"}, "料槽");
         moveButtonY.setBounds(0, 0, 104, 184);
         JPanel containerY = new JPanel(null);
         containerY.add(moveButtonY);
         containerY.setSize(104, 184);
         yMovePanel = containerY;
-
         $$$setupUI$$$();
-
 
         允许客户端连接Button.addActionListener(new ActionListener() {
             @Override

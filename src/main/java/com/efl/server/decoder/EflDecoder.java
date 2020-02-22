@@ -26,7 +26,7 @@ public class EflDecoder extends ByteToMessageDecoder {
                 // 获取包头开始的index
                 beginReader = in.readerIndex();
                 // 标记包头开始的index
-                in.markReaderIndex();                                    //?????????
+                in.markReaderIndex();
                 // 读到协议的开始标志，结束while循环
                 if (in.readInt() == ConstantValue.HEAD_DATA) {
                     break;

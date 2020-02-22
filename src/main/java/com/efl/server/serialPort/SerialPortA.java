@@ -16,8 +16,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 @Slf4j
 public class SerialPortA extends SerialportO {
 
-
-
     @Override
     void readData() {
 
