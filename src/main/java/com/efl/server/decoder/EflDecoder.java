@@ -16,7 +16,6 @@ public class EflDecoder extends ByteToMessageDecoder {
     @Override
     protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf in, List<Object> list) throws Exception {
 
-
         if (in.readableBytes() >= BASE_LENGTH) {
 
             // 记录包头开始的index
