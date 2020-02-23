@@ -19,7 +19,6 @@ public class EflDecoder extends ByteToMessageDecoder {
 
         if (in.readableBytes() >= BASE_LENGTH) {
 
-
             // 记录包头开始的index
             int beginReader;
             while (true) {
@@ -46,7 +45,7 @@ public class EflDecoder extends ByteToMessageDecoder {
             // 代码到这里，说明已经读到了报文标志
 
             // 消息长度
-            int length = in.readInt();                       //去掉消息头，得到消息长度，得到类型???readInt????????
+            int length = in.readInt();                       //去掉消息头，得到消息长度，得到类型
             // 判断请求数据包是否到齐
             if (in.readableBytes() < length) { // 数据不齐，回退读指针
                 // 还原读指针

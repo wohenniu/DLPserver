@@ -38,7 +38,6 @@ public class ServerApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        String Filepath=serverUI.getFilepath();
         JFrame frame = new JFrame();
         frame.setTitle("DLP");
         frame.setContentPane(serverUI.getPanel());
@@ -59,12 +58,13 @@ public class ServerApplication implements CommandLineRunner {
 
                 }
                 serverUI.portClose();                       //串口关闭
-                log.info("窗口关闭");
                 super.windowClosing(e);
+                log.info("窗口关闭");
             }
         });
 
         ChannelFuture future = dlpServer.start(port);
+        //通过addshut..向jvm虚拟机注册钩子事件，在jvm关闭之前，运行线程hook，做一些未完成的事情
         Runtime.getRuntime().addShutdownHook(new Thread() {  //在jvm销毁之前关闭线程池
             @Override
             public void run() {

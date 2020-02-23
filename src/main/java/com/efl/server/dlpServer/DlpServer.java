@@ -29,6 +29,8 @@ public class DlpServer {
      * 一个用于接收客户端的TCP连接，
      * 另一个用于处理I/O相关的读写操作，或者执行系统Task、定时任务Task等。
      */
+    @Autowired
+    private EflHandler eflHandler;
     private final EventLoopGroup bossGroup = new NioEventLoopGroup(1);
     private final EventLoopGroup workerGroup = new NioEventLoopGroup(5);
     private ConcurrentHashMap<String,Channel> concurrentHashMap=new ConcurrentHashMap<>();
@@ -38,9 +40,6 @@ public class DlpServer {
     public String getHost() {
         return host;
     }
-
-    @Autowired
-    private EflHandler eflHandler;
 
     public ChannelFuture start(int port) {
        // host= InetAddress.getLocalHost().getHostAddress();
@@ -77,7 +76,6 @@ public class DlpServer {
                                     .addLast(eflHandler);
                         }
                     });
-
             f = b.bind().sync();
             channel = f.channel();
             log.info("======EchoServer启动成功!!!=========");

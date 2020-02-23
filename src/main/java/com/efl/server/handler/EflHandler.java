@@ -25,7 +25,6 @@ import java.net.InetSocketAddress;
 @ChannelHandler.Sharable
 public class EflHandler extends SimpleChannelInboundHandler<EflMessage> {
 
-
     @Autowired
     SerialPortA serialPortA;
 
@@ -35,19 +34,28 @@ public class EflHandler extends SimpleChannelInboundHandler<EflMessage> {
     @Autowired
     DlpServer dlpServer;
 
+    public String getclientIp( ChannelHandlerContext ctx){
+        InetSocketAddress ipSocket = (InetSocketAddress)ctx.channel().remoteAddress();
+        return ipSocket.getAddress().getHostAddress();
+    }
+
     //客户端连接到服务端后进行,在channel被启用的时候触发（在建立连接的时候）
+    //当有客户端接入时触发
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        InetSocketAddress ipSocket = (InetSocketAddress)ctx.channel().remoteAddress();
-        String clientIp = ipSocket.getAddress().getHostAddress();
+        //得到ip
+        String clientIp = getclientIp(ctx);
+        //得到连接数
         if(dlpServer.getSize()==0){
             dlpServer.put(clientIp,ctx.channel());
             log.info("连接成功："+clientIp);
             String s="服务端连接成功";
+            //通过上下文对象发送消息"服务端连接成功"
             ctx.writeAndFlush(new EflMessage(s.getBytes().length,ConstantValue.STRING,s.getBytes()));
             int x=print.getWidth();
             int y=print.getHeight();
             String data=x+" "+y;
+            //发送机器参数
             ctx.writeAndFlush(new EflMessage(data.getBytes().length,ConstantValue.MACHINE_DATA,data.getBytes()));
         }else {
             String s = "服务端已存在连接";
@@ -58,8 +66,8 @@ public class EflHandler extends SimpleChannelInboundHandler<EflMessage> {
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        InetSocketAddress ipSocket = (InetSocketAddress)ctx.channel().remoteAddress();
-        String clientIp = ipSocket.getAddress().getHostAddress();
+        //得到ip
+        String clientIp = getclientIp(ctx);
         log.info("断开连接："+clientIp);
         dlpServer.removeChannel(clientIp);
     }
@@ -76,7 +84,6 @@ public class EflHandler extends SimpleChannelInboundHandler<EflMessage> {
             print.setImage(img);
         }
     }
-
 
     private Image convertToImage(byte[] bytes){
         BufferedImage bufferedImage= null;
