@@ -12,9 +12,21 @@ import org.springframework.stereotype.Component;
 public class EflEncoder extends MessageToByteEncoder<EflMessage> {
     @Override
     protected void encode(ChannelHandlerContext channelHandlerContext, EflMessage msg, ByteBuf byteBuf) throws Exception {
-        byteBuf.writeInt(msg.getHeader());              //消息头+消息长度+类型+内容
+        //消息头+消息长度+类型+内容
+        byteBuf.writeInt(msg.getHeader());
         byteBuf.writeInt(msg.getContentLength());
         byteBuf.writeInt(msg.getType());
         byteBuf.writeBytes(msg.getContent());
     }
 }
+
+
+
+
+
+
+
+
+
+
+

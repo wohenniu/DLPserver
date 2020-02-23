@@ -55,7 +55,6 @@ public class ServerApplication implements CommandLineRunner {
                     //   serverUI.getReadimg().getPrintThread().interrupt();
                 } catch (Exception e1) {
                     System.out.println(e1.getMessage());
-
                 }
                 serverUI.portClose();                       //串口关闭
                 super.windowClosing(e);
@@ -64,7 +63,7 @@ public class ServerApplication implements CommandLineRunner {
         });
 
         ChannelFuture future = dlpServer.start(port);
-        //通过addshut..向jvm虚拟机注册钩子事件，在jvm关闭之前，运行线程hook，做一些未完成的事情
+        //通过addShutdownHook向jvm虚拟机注册钩子事件，在jvm关闭之前，开启线程做一些未完成的事情
         Runtime.getRuntime().addShutdownHook(new Thread() {  //在jvm销毁之前关闭线程池
             @Override
             public void run() {
